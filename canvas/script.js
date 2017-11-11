@@ -1,12 +1,21 @@
 var canvas, ctx, w, h;
 
-var ball = {
-  x: 10,
-  y: 10,
-  radius:10,
+var ball1 = {
+  x: 100,
+  y: 100,
+  radius:100,
   color: 'red',
   speedX: 1,
   speedY: 1
+}
+
+var ball2 = {
+  x: 20,
+  y: 20,
+  radius:20,
+  color: 'green',
+  speedX: 2,
+  speedY: 2
 }
 
 window.onload = init;
@@ -26,30 +35,38 @@ function mainLoop(){
   // clear the canvas
   ctx.clearRect(0, 0, w, h);
 
-  drawCircle(ball);
+  drawCircle(ball1);
+  drawCircle(ball2);
 
-  moveBall(ball);
+  moveBall(ball1);
+  moveBall(ball2);
 
   requestAnimationFrame(mainLoop);
 
 }
 
 function moveBall(b){
-  b.x += b.speedX;
+  if(b.x>=b.radius && b.x<w-b.radius && b.y==b.radius){
+    b.x +=b.speedX;
+} else if ((b.x<=w-b.radius && b.x>b.radius && b.y==h-b.radius)){
+    b.x -= b.speedX;
+} else if(b.x==w-b.radius && b.y>=b.radius && b.y<h-b.radius){
+  b.y += b.speedY;
+} else if(b.x==b.radius && b.y<=h-b.radius && b.y>b.radius){
+  b.y -= b.speedY;
+}
 
-
-  testCollisionWithWalls(b);
+  //testCollisionWithWalls(b);
 }
 
 function testCollisionWithWalls(b){
-  if((b.x+b.radius)>w){
+  /*if((b.x+b.radius)>=w){
     b.speedX = -b.speedX;
-
     b.x = w - b.radius;
   } else if((b.x-b.radius)<0){
     b.speedX = -b.speedX;
     b.x = b.radius;
-  }
+  }*/
 }
 
 function drawCircle(b){
